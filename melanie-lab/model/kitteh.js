@@ -2,12 +2,12 @@
 
 const uuidv4 = require('uuid/v4');
 
-module.exports = function(name, content) {
+module.exports = function(name, age) {
   if (!name) throw new Error('Expected name');
-  if (!content) throw new Error('Expected content');
+  if (!age) throw new Error('Expected age');
 
   this.id = uuidv4();
   this.name = name;
-  this.content = content;
+  this.age = age;
   this.says = 'meow';
 };

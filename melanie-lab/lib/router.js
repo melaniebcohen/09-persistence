@@ -41,11 +41,11 @@ Router.prototype.route = function() {
           return;
         }
         response.sendMessage(res, 404, 'Route not found', 'text/plain');
-        console.error('Route is not found.');
+        console.error('Router.js - Route is not found.');
       })
       .catch( err => {
         response.sendMessage(res, 400, 'Bad request', 'text/plain');
-        console.error(err.message);
+        console.error(err);
       });
   };
 };

@@ -23,10 +23,8 @@ module.exports = function(req) {
         console.error(err.message);
         reject(err);
       });
-
       return;
     }
-
     resolve();
   });
 };
