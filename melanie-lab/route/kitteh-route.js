@@ -12,7 +12,7 @@ module.exports = function(router) {
           response.sendMessage(res, 200, JSON.stringify(kitteh), 'application/json');
         })
         .catch( err => {
-          console.log(err);
+          console.error(err.message);
           response.sendMessage(res, 404, 'Route not found', 'text/plain');
         });
       return;
@@ -24,34 +24,24 @@ module.exports = function(router) {
     try {
       var kitteh = new Kitteh(req.body.name, req.body.age);
       storage.createItem('kitteh', kitteh);
-      console.log(kitteh);
       response.sendMessage(res, 200, JSON.stringify(kitteh), 'application/json');
     } catch (err) {
-      console.error(err);
+      console.error(err.message);
       response.sendMessage(res, 400, 'Bad request', 'text/plain');
     }
   });
 
   router.delete('/api/kitteh', function(req, res) {
-    if (req.url.query.id) {
-      storage.fetchItem('kitteh', req.url.query.id)
-        .then( () => {
-          storage.deleteItem('kitteh', req.url.query.id)
-            .then( () => {
-              response.sendMessage(res, 200, 'Kitteh is all gone', 'text/plain');
-            })
-            .catch( () => {
-              response.sendText(res, 400, 'bad request');
-            });
-        })
-        .catch( err => {
-          if (err.message === 'Schema id not found') {
-            response.sendMessage(res, 404, 'Valid request, but id not found', 'text/plain');
-          }
-        });
-    }
-    if (!req.url.query.id) {
+    if (req.url.query.id === undefined) {
       response.sendMessage(res, 400, 'Bad request', 'text/plain');
+    } else {
+      storage.deleteItem('kitteh', req.url.query.id)
+        .then( () => {
+          response.sendMessage(res, 204, 'Kitteh is all gone', 'text/plain');
+        })
+        .catch( () => {
+          response.sendMessage(res, 404, 'Id not found', 'text/plain');
+        });
     }
   });
 };

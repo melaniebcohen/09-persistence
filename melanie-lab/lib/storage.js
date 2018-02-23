@@ -32,16 +32,23 @@ exports.fetchItem = function(schemaName, id) {
     .catch( err => Promise.reject(err) );
 };
 
-// exports.deleteItem = function(schemaName, id) {
-//   return new Promise((resolve, reject) => {
-//     if (!schemaName) return reject(new Error('Expected schema name'));
-//     if (!id) return reject(new Error('Expected id'));
+exports.deleteItem = function(schemaName, id) {
+  return new Promise((resolve, reject) => {
+    if (!schemaName) return reject(new Error('Expected schema name'));
+    if (!id) return reject(new Error('Expected id'));
 
-//     let schema = storage[schemaName];
-//     if (!schema) return reject(new Error('Schema not found'));
+    /* credit: https://stackoverflow.com/questions/36659612/how-does-node-js-fs-unlink-works */
+    let resultHandler = function(err) { 
+      if (err) {
+        console.log('Unlink failed', err.code);
+        return reject();
+      } else {
+        console.log('File deleted');
+        return resolve();
+      }
+    };
+  
+    fs.unlinkProm(`${__dirname}/../data/${schemaName}/${id}.json`, resultHandler);
 
-//     delete schema[id];
-
-//     resolve();
-//   });
-// };
+  });
+};
