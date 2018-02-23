@@ -14,9 +14,16 @@
   * **parse-json.js**
   * **parse-url.js**
   * **router.js** 
+  * **response.js**
   * **storage.js**
-* **model** - contains resource model
+* **model/** - contains resource model
+  * **kitteh.js**
+* **route/** - contains routes
+  * **kitteh-route.js**
+* **data/** - contains data within file system
+  * **kitteh/**
 * **__test__** - contains route tests
+  * **kitteh-route-test.js**
 * **server.js** - runs the application
 
 ## Installation
