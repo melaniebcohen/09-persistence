@@ -21,9 +21,18 @@ describe('Kitteh Routes', () => {
           done();
         });
     });
-    it('should respond with 404 if no request body was provided or the body was invalid - no content', function(done) {
+    it('should respond with 404 if no request body was provided or the body was invalid - no age', function(done) {
       request.post(`localhost:3000/api/kitteh`)
-        .send({ content: 'i can haz' })
+        .send({ name: 'i can haz' })
+        .end((err, res) => {
+          expect(res.text).toEqual('Bad request');
+          expect(res.status).toEqual(400);
+          done();
+        });
+    });
+    it('should respond with 404 if no request body was provided or the body was invalid - no name', function(done) {
+      request.post(`localhost:3000/api/kitteh`)
+        .send({ age: 2 })
         .end((err, res) => {
           expect(res.text).toEqual('Bad request');
           expect(res.status).toEqual(400);
@@ -83,6 +92,25 @@ describe('Kitteh Routes', () => {
       request.delete(`localhost:3000/api/kitteh`)
         .end((err, res) => {
           expect(res.status).toBe(400);
+          done();
+        });
+    });
+  });
+
+  describe('Route Errors', () => {
+    it('should return a 400 error if it is a bad request', function(done) {
+      request.put(`localhost:3000/api/`)
+        .end((err, res) => {
+          expect(res.status).toBe(400);
+          expect(res.text).toBe('Bad request');
+          done();
+        });
+    });
+    it('should return a 404 error if route is not found', function(done) {
+      request.delete(`localhost:3000/api/`)
+        .end((err, res) => {
+          expect(res.status).toBe(404);
+          expect(res.text).toBe('Route not found');
           done();
         });
     });
