@@ -2,7 +2,7 @@
 
 module.exports = exports = {};
 
-exports.sendMessage = function(res, status, content, contentType) {
+exports.sendMessage = (res, status, content, contentType) => {
   res.writeHead(status, { 'Content-Type' : `${contentType}` });
   res.write(content);
   res.end();

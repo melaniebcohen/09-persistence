@@ -4,10 +4,10 @@ const request = require('superagent');
 require('jest');
 require('../server.js');
 
-describe('Kitteh Routes', function() {
+describe('Kitteh Routes', () => {
   let kitteh = null;
 
-  describe('POST: api/kitteh', function() {
+  describe('POST: api/kitteh', () => {
     it('should return a kitteh', function(done) {
       request.post(`localhost:3000/api/kitteh`)
         .send({ name: 'Finn', age: 1.5 })
@@ -32,7 +32,7 @@ describe('Kitteh Routes', function() {
     });
   });
 
-  describe('GET: api/kitteh', function() {
+  describe('GET: api/kitteh', () => {
     it('should return a kitteh', function(done) {
       request.get(`localhost:3000/api/kitteh?id=${kitteh.id}`)
         .end((err, res) => {
@@ -63,7 +63,7 @@ describe('Kitteh Routes', function() {
     });
   });
 
-  describe('DELETE: api/kitteh', function() {
+  describe('DELETE: api/kitteh', () => {
     it('should return a 404 error if valid request made with an id that was not found', function(done) {
       request.delete(`localhost:3000/api/kitteh?id=1`)
         .end((err, res) => {
@@ -83,7 +83,6 @@ describe('Kitteh Routes', function() {
       request.delete(`localhost:3000/api/kitteh`)
         .end((err, res) => {
           expect(res.status).toBe(400);
-          // expect(res.text).toEqual('Bad request');
           done();
         });
     });

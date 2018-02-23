@@ -5,7 +5,7 @@ const fs = Promise.promisifyAll(require('fs'), { suffix: 'Prom' });
 
 module.exports = exports = {};
 
-exports.createItem = function(schemaName, item) {
+exports.createItem = (schemaName, item) => {
   if (!schemaName) return Promise.reject(new Error('Expected schema name'));
   if (!item) return Promise.reject(new Error('Expected item'));
 
@@ -15,7 +15,7 @@ exports.createItem = function(schemaName, item) {
     .catch( err => Promise.reject(err) );
 };
 
-exports.fetchItem = function(schemaName, id) {
+exports.fetchItem = (schemaName, id) => {
   if (!schemaName) return Promise.reject(new Error('Expected schema name'));
   if (!id) return Promise.reject(new Error('Expected id'));
 
@@ -32,13 +32,13 @@ exports.fetchItem = function(schemaName, id) {
     .catch( err => Promise.reject(err) );
 };
 
-exports.deleteItem = function(schemaName, id) {
+exports.deleteItem = (schemaName, id) => {
   return new Promise((resolve, reject) => {
     if (!schemaName) return reject(new Error('Expected schema name'));
     if (!id) return reject(new Error('Expected id'));
 
     /* credit: https://stackoverflow.com/questions/36659612/how-does-node-js-fs-unlink-works */
-    let resultHandler = function(err) { 
+    let resultHandler = err => { 
       if (err) {
         console.log('Unlink failed', err.code);
         return reject();
